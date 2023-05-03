@@ -16,12 +16,12 @@ jobs:
 
       - name: Pack files
         run: |
+          mkdir -p ./dist
           while IFS= read -r asset_bin_dir; do
             asset_dir="$(dirname "${asset_bin_dir}")"
             asset_name="$(basename "${asset_dir}")"
-            mkdir -p ./dist
             tar -C "${asset_dir}" -cvzf "./dist/${asset_name}.tar.gz" .
-            sha512sum -z "./dist/${asset_name}.tar.gz" | awk '{print $1}' | tee -a "./dist/sha512sums.txt"
+            sha512sum -z "./dist/${asset_name}.tar.gz" | awk '{print $2 "\n  " $1}' | tee -a "./dist/sha512sums.txt"
           done < <(find . -mindepth 2 -maxdepth 2 -type d \( -path ./.git -o -path ./.github \) -prune -o -type d -name 'bin' -print)
 
       - name: "Release"
