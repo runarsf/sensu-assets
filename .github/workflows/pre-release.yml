@@ -9,6 +9,14 @@ on:
       - "*"
 
 jobs:
+  ci-debug:
+    name: Prints information for CI debugging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print GitHub event action
+        run: |
+          echo "${{ github.event.action }}"
+
   pre-release:
     if: ${{ ( github.event.action == 'workflow_dispatch' ) && ( contains(github.event.head_commit.message, '(assets)') ) }}
     runs-on: "ubuntu-latest"
