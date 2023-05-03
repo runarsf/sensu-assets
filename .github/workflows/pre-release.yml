@@ -1,12 +1,12 @@
 name: "pre-release"
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - "main"
     tags-ignore:
       - "*"
-    workflow_dispatch:
 
 jobs:
   pre-release:
