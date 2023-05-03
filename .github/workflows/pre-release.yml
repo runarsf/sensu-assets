@@ -13,12 +13,12 @@ jobs:
     name: Prints information for CI debugging
     runs-on: ubuntu-latest
     steps:
-      - name: Print GitHub event action
+      - name: Print GitHub event name
         run: |
-          echo "${{ github.event.action }}"
+          echo "${{ github.github.event_name }}"
 
   pre-release:
-    if: ${{ ( github.event.action == 'workflow_dispatch' ) && ( contains(github.event.head_commit.message, '(assets)') ) }}
+    if: ${{ ( github.event_name == 'workflow_dispatch' ) || ( contains(github.event.head_commit.message, '(assets)') ) }}
     runs-on: "ubuntu-latest"
 
     steps:
